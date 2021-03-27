@@ -10,6 +10,7 @@
    header div + div { flex-grow: 1; }
    nav              { display: block; padding-top: 1em; }
    nav a            { margin: 0 0.5em; font-size: 1.6em; font-weight: bold; color: #2D0A7A; text-decoration: none; }
+   div              { max-width: 600px; margin: 0 auto; }
    img              { display: block; margin: 5px 0 5px 10px; }
    main             { margin-top: 85px; }
    @media screen and (max-width:600px){
@@ -36,6 +37,53 @@
       Idee was genau daraus werden soll.</p>
    <p>Positiv aufgefallen: hier gibt es es schon https und nicht nur http.</p>
    <p>Ebenfalls sehr positiv: posten direkt aus Git in die Website.</p>
+   <div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+     <path d="M 0,0" style="stroke:#000000;fill:#FF0000" fill-rule="evenodd"/>
+    </svg>
+   </div>
+   <script>
+    const STEP     = 0.005 ;
+
+    let   interval = null ;
+    let   angle    = 0.01 ;
+    let   path     = document.querySelector( "path" ) ;
+
+    function fx( angle )
+    {
+       return 250 + 105 * (Math.sin(angle) - 0.75 * Math.sin(3*angle) + 0.55 * Math.sin(9*angle)) ;
+    }
+
+    function fy( angle )
+    {
+       return 250 - 125 * (Math.cos(angle) - 0.75 *Math.cos(7*angle) - 0.35 * Math.cos(9*angle) + 0.15 * Math.cos(11*angle)) ;
+    }
+
+   function draw()
+   {
+      let d = `M ${fx(0)},${fy(0)} L`;
+
+      let a = STEP ;
+      while( a < angle )
+      {
+         d += ` ${fx(a)},${fy(a)}`
+         a += STEP ;
+      }
+
+      if( angle < 2 * Math.PI )
+	 angle += STEP ;
+      else
+      {
+	 d += " z" ;
+	 clearInterval( interval ) ;
+      }
+
+      path.setAttribute( "d", d ) ;
+   }
+
+   draw() ;
+   interval = setInterval( draw, 10 ) ;
+  </script>
   </main>
  </body>
 </html>
